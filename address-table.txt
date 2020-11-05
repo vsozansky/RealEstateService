@@ -1,0 +1,188 @@
+name="MAP" id="naxmapa" value="60.073759,30.338317"
+
+
+
+id="locaapi" name="locaapi" type="text" 
+placeholder="Поиск адреса" 
+value="г Санкт-Петербург, поселок Парголово, ул Фёдора Абрамова, д 8 " 
+
+
+id="LOCATION" type="text" name="LOCATION" 
+value="г Санкт-Петербург, поселок Парголово, ул Фёдора Абрамова, д 8 "
+
+
+
+table class="address-table"
+
+
+class="LOCATION_REGION"
+Субъект
+
+id="REGION_VALUE" 
+value="Санкт-Петербург"
+
+id="REGION_DESC" 
+value="город" 
+
+
+class="LOCATION_CITY"
+Город / н.п.
+
+id="CITY_VALUE" 
+value="Санкт-Петербург" 
+
+
+id="CITY_DESC" 
+value="город" 
+
+
+class="LOCATION_STREET"
+Улица
+name="STREET_VALUE" 
+value="Фёдора Абрамова" 
+
+name="STREET_DESC"
+value="улица"
+
+
+class="LOCATION_NUMBE_HOME"
+№ дома
+
+id="NUMBE_HOME" 
+value="8"
+
+
+class="LOCATION_BLOCK"
+Корпус / Стр.
+
+
+id="BLOCK_VALUE" 
+value=""
+
+id="BLOCK_DESC" 
+value="" 
+
+class="APARTMENT_NUMBER"
+№ квартиры
+                   
+id="APARTMENT_NUMBER" 
+value="" 
+
+class="KADASTR"
+Кадастр. №
+
+
+id="KADASTR" 
+value="" 
+
+
+Район
+select name="DISTRICT"
+                  <option value="">...</option>
+                                       <option value="15419">Адмиралтейский</option>
+                                       <option value="15420">Василеостровский</option>
+                                       <option value="15421" selected="">Выборгский</option>
+                                       <option value="15422">Калининский</option>
+                                       <option value="15423">Кировский</option>
+                                       <option value="15424">Колпинский</option>
+                                       <option value="15425">Красногвардейский</option>
+                                       <option value="15426">Красносельский</option>
+                                       <option value="15427">Кронштадтский</option>
+                                       <option value="15428">Курортный</option>
+                                       <option value="15429">Московский</option>
+                                       <option value="15430">Невский</option>
+                                       <option value="15431">Петроградский</option>
+                                       <option value="15432">Петродворцовый</option>
+                                       <option value="15433">Приморский</option>
+                                       <option value="15434">Пушкинский</option>
+                                       <option value="15435">Фрунзенский</option>
+                                       <option value="15436">Центральный</option>
+                                 </select>
+  <span>Выборгский</span>
+
+
+Ст. метро
+select id="metrolist"
+name="METRO[]"
+
+                                       <option value="15352">Автово</option>
+                                       <option value="15394">Адмиралтейская</option>
+                                       <option value="15403">Академическая</option>
+                                       <option value="15404">Балтийская</option>
+                                       <option value="15405">Беговая</option>
+                                       <option value="15399">Бухарестская</option>
+                                       <option value="15371">Василеостровская</option>
+                                       <option value="15348">Владимирская</option>
+                                       <option value="15398">Волковская</option>
+                                       <option value="15344">Выборгская</option>
+                                       <option value="15379">Гавань</option>
+                                       <option value="15380">Горный институт</option>
+                                       <option value="15360">Горьковская</option>
+                                       <option value="15372">Гостиный двор</option>
+                                       <option value="15340">Гражданский проспект</option>
+                                       <option value="15339">Девяткино</option>
+                                       <option value="15406">Достоевская</option>
+                                       <option value="15401">Дунайская</option>
+                                       <option value="15374">Елизаровская</option>
+                                       <option value="15366">Звёздная</option>
+                                       <option value="15396">Звенигородская</option>
+                                       <option value="15351">Кировский завод</option>
+                                       <option value="15391">Комендантский проспект</option>
+                                       <option value="15393">Крестовский остров</option>
+                                       <option value="15388">Кудрово</option>
+                                       <option value="15367">Купчино</option>
+                                       <option value="15385">Ладожская</option>
+                                       <option value="15407">Ленинский проспект</option>
+                                       <option value="15343">Лесная</option>
+                                       <option value="15382">Лиговский проспект</option>
+                                       <option value="15375">Ломоносовская</option>
+                                       <option value="15408">Маяковская</option>
+                                       <option value="15409">Международная</option>
+                                       <option value="15378">Морской фасад</option>
+                                       <option value="15365">Московская</option>
+                                       <option value="15363">Московские ворота</option>
+                                       <option value="15350">Нарвская</option>
+                                       <option value="15361">Невский проспект</option>
+                                       <option value="15373">Невского</option>
+                                       <option value="15369">Новокрестовская</option>
+                                       <option value="15384">Новочеркасская</option>
+                                       <option value="15397">Обводный канал</option>
+                                       <option value="15376">Обухово</option>
+                                       <option value="15356">Озерки</option>
+                                       <option value="15410">Парк Победы</option>
+                                       <option value="15354">Парнас</option>
+                                       <option value="15359">Петроградская</option>
+                                       <option value="15411">Пионерская</option>
+                                       <option value="15412">Планерная</option>
+                                       <option value="15383">Площадь Александра Невского</option>
+                                       <option value="15347">Площадь Восстания</option>
+                                       <option value="15345">Площадь Ленина</option>
+                                       <option value="15342">Площадь Мужества</option>
+                                       <option value="15341">Политехническая</option>
+                                       <option value="15370">Приморская</option>
+                                       <option value="15413">Пролетарская</option>
+                                       <option value="15386">Проспект Большевиков</option>
+                                       <option value="15353">Проспект Ветеранов</option>
+                                       <option value="15355">Проспект Просвещения</option>
+                                       <option value="15400">Проспект Славы</option>
+                                       <option value="15414">Пушкинская</option>
+                                       <option value="15377">Рыбацкое</option>
+                                       <option value="15395">Садовая</option>
+                                       <option value="15362">Сенная площадь</option>
+                                       <option value="15381">Спасская</option>
+                                       <option value="15415">Спортивная</option>
+                                       <option value="15392">Старая деревня</option>
+                                       <option value="15416">Театральная</option>
+                                       <option value="15349">Технологический институт</option>
+                                       <option value="15368">Туристская</option>
+                                       <option value="15357">Удельная</option>
+                                       <option value="15387">Улица Дыбенко</option>
+                                       <option value="15417">Фрунзенская</option>
+                                       <option value="15358">Чёрная речка</option>
+                                       <option value="15346">Чернышевская</option>
+                                       <option value="15418">Чкаловская</option>
+                                       <option value="15390">Шуваловский проспект</option>
+                                       <option value="15402">Шушары</option>
+                                       <option value="15364">Электросила</option>
+                                       <option value="15389">Юго-Восточная</option>
+id="metrolist_chosen" 
