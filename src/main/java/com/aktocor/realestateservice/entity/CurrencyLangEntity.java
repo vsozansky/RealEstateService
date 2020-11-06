@@ -1,19 +1,31 @@
-package com.jprestashop.entity;
+package com.aktocor.realestateservice.entity;
 
 import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
-@Table(name = "currency_lang", schema = "ps1761", catalog = "")
+@Table(name = "currency_lang")
 @IdClass(CurrencyLangEntityPK.class)
 public class CurrencyLangEntity {
-    private int idCurrency;
-    private int idLang;
-    private String name;
-    private String symbol;
-
     @Id
     @Column(name = "id_currency", nullable = false)
+    private int idCurrency;
+
+    @Id
+    @Column(name = "id_lang", nullable = false)
+    private int idLang;
+
+    @Basic
+    @Column(name = "name", nullable = false, length = 64)
+    private String name;
+
+    @Basic
+    @Column(name = "symbol", nullable = false, length = 64)
+    private String symbol;
+
+    public CurrencyLangEntity() {
+    }
+
     public int getIdCurrency() {
         return idCurrency;
     }
@@ -22,8 +34,6 @@ public class CurrencyLangEntity {
         this.idCurrency = idCurrency;
     }
 
-    @Id
-    @Column(name = "id_lang", nullable = false)
     public int getIdLang() {
         return idLang;
     }
@@ -32,8 +42,6 @@ public class CurrencyLangEntity {
         this.idLang = idLang;
     }
 
-    @Basic
-    @Column(name = "name", nullable = false, length = 255)
     public String getName() {
         return name;
     }
@@ -42,8 +50,6 @@ public class CurrencyLangEntity {
         this.name = name;
     }
 
-    @Basic
-    @Column(name = "symbol", nullable = false, length = 255)
     public String getSymbol() {
         return symbol;
     }
@@ -66,5 +72,15 @@ public class CurrencyLangEntity {
     @Override
     public int hashCode() {
         return Objects.hash(idCurrency, idLang, name, symbol);
+    }
+
+    @Override
+    public String toString() {
+        return "CurrencyLangEntity{" +
+                "idCurrency=" + idCurrency +
+                ", idLang=" + idLang +
+                ", name='" + name + '\'' +
+                ", symbol='" + symbol + '\'' +
+                '}';
     }
 }

@@ -1,4 +1,4 @@
-package com.jprestashop.entity;
+package com.aktocor.realestateservice.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Id;
@@ -6,11 +6,22 @@ import java.io.Serializable;
 import java.util.Objects;
 
 public class CurrencyLangEntityPK implements Serializable {
-    private int idCurrency;
-    private int idLang;
-
     @Column(name = "id_currency", nullable = false)
     @Id
+    private int idCurrency;
+
+    @Column(name = "id_lang", nullable = false)
+    @Id
+    private int idLang;
+
+    public CurrencyLangEntityPK() {
+    }
+
+    public CurrencyLangEntityPK(int idCurrency, int idLang) {
+        this.idCurrency = idCurrency;
+        this.idLang = idLang;
+    }
+
     public int getIdCurrency() {
         return idCurrency;
     }
@@ -19,8 +30,6 @@ public class CurrencyLangEntityPK implements Serializable {
         this.idCurrency = idCurrency;
     }
 
-    @Column(name = "id_lang", nullable = false)
-    @Id
     public int getIdLang() {
         return idLang;
     }
@@ -41,5 +50,13 @@ public class CurrencyLangEntityPK implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hash(idCurrency, idLang);
+    }
+
+    @Override
+    public String toString() {
+        return "CurrencyLangEntityPK{" +
+                "idCurrency=" + idCurrency +
+                ", idLang=" + idLang +
+                '}';
     }
 }

@@ -1,33 +1,60 @@
-package com.jprestashop.entity;
+package com.aktocor.realestateservice.entity;
+
+import com.sun.org.apache.xpath.internal.operations.Bool;
 
 import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
-@Table(name = "lang", schema = "ps1761", catalog = "")
+@Table(name = "lang")
 public class LangEntity {
-    private int idLang;
-    private String name;
-    private byte active;
-    private String isoCode;
-    private String languageCode;
-    private String locale;
-    private String dateFormatLite;
-    private String dateFormatFull;
-    private byte isRtl;
-
     @Id
     @Column(name = "id_lang", nullable = false)
-    public int getIdLang() {
-        return idLang;
-    }
-
-    public void setIdLang(int idLang) {
-        this.idLang = idLang;
-    }
+    private Integer idLang;
 
     @Basic
     @Column(name = "name", nullable = false, length = 32)
+    private String name;
+
+    @Basic
+    @Column(name = "active", nullable = false)
+    private Boolean active;
+
+    @Basic
+    @Column(name = "iso_code", nullable = false, length = 2)
+    private String isoCode;
+
+    @Basic
+    @Column(name = "language_code", nullable = false, length = 5)
+    private String languageCode;
+
+    @Basic
+    @Column(name = "locale", nullable = false, length = 5)
+    private String locale;
+
+    @Basic
+    @Column(name = "date_format_lite", nullable = false, length = 32)
+    private String dateFormatLite;
+
+    @Basic
+    @Column(name = "date_format_full", nullable = false, length = 32)
+    private String dateFormatFull;
+
+    @Basic
+    @Column(name = "is_rtl", nullable = false)
+    private Boolean isRtl;
+
+    public LangEntity() {
+    }
+
+    public Integer getIdLang() {
+        return idLang;
+    }
+
+    public void setIdLang(Integer idLang) {
+        this.idLang = idLang;
+    }
+
     public String getName() {
         return name;
     }
@@ -36,18 +63,14 @@ public class LangEntity {
         this.name = name;
     }
 
-    @Basic
-    @Column(name = "active", nullable = false)
-    public byte getActive() {
+    public Boolean getActive() {
         return active;
     }
 
-    public void setActive(byte active) {
+    public void setActive(Boolean active) {
         this.active = active;
     }
 
-    @Basic
-    @Column(name = "iso_code", nullable = false, length = 2)
     public String getIsoCode() {
         return isoCode;
     }
@@ -56,8 +79,6 @@ public class LangEntity {
         this.isoCode = isoCode;
     }
 
-    @Basic
-    @Column(name = "language_code", nullable = false, length = 5)
     public String getLanguageCode() {
         return languageCode;
     }
@@ -66,8 +87,6 @@ public class LangEntity {
         this.languageCode = languageCode;
     }
 
-    @Basic
-    @Column(name = "locale", nullable = false, length = 5)
     public String getLocale() {
         return locale;
     }
@@ -76,8 +95,6 @@ public class LangEntity {
         this.locale = locale;
     }
 
-    @Basic
-    @Column(name = "date_format_lite", nullable = false, length = 32)
     public String getDateFormatLite() {
         return dateFormatLite;
     }
@@ -86,8 +103,6 @@ public class LangEntity {
         this.dateFormatLite = dateFormatLite;
     }
 
-    @Basic
-    @Column(name = "date_format_full", nullable = false, length = 32)
     public String getDateFormatFull() {
         return dateFormatFull;
     }
@@ -96,13 +111,11 @@ public class LangEntity {
         this.dateFormatFull = dateFormatFull;
     }
 
-    @Basic
-    @Column(name = "is_rtl", nullable = false)
-    public byte getIsRtl() {
+    public Boolean getIsRtl() {
         return isRtl;
     }
 
-    public void setIsRtl(byte isRtl) {
+    public void setIsRtl(Boolean isRtl) {
         this.isRtl = isRtl;
     }
 
@@ -111,19 +124,34 @@ public class LangEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         LangEntity that = (LangEntity) o;
-        return idLang == that.idLang &&
-                active == that.active &&
-                isRtl == that.isRtl &&
+        return Objects.equals(idLang, that.idLang) &&
                 Objects.equals(name, that.name) &&
+                Objects.equals(active, that.active) &&
                 Objects.equals(isoCode, that.isoCode) &&
                 Objects.equals(languageCode, that.languageCode) &&
                 Objects.equals(locale, that.locale) &&
                 Objects.equals(dateFormatLite, that.dateFormatLite) &&
-                Objects.equals(dateFormatFull, that.dateFormatFull);
+                Objects.equals(dateFormatFull, that.dateFormatFull) &&
+                Objects.equals(isRtl, that.isRtl);
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(idLang, name, active, isoCode, languageCode, locale, dateFormatLite, dateFormatFull, isRtl);
+    }
+
+    @Override
+    public String toString() {
+        return "LangEntity{" +
+                "idLang=" + idLang +
+                ", name='" + name + '\'' +
+                ", active=" + active +
+                ", isoCode='" + isoCode + '\'' +
+                ", languageCode='" + languageCode + '\'' +
+                ", locale='" + locale + '\'' +
+                ", dateFormatLite='" + dateFormatLite + '\'' +
+                ", dateFormatFull='" + dateFormatFull + '\'' +
+                ", isRtl=" + isRtl +
+                '}';
     }
 }

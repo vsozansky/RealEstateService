@@ -1,17 +1,26 @@
-package com.jprestashop.entity;
+package com.aktocor.realestateservice.entity;
 
 import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
-@Table(name = "zone", schema = "ps1761", catalog = "")
+@Table(name = "zone")
 public class ZoneEntity {
-    private int idZone;
-    private String name;
-    private byte active;
-
     @Id
     @Column(name = "id_zone", nullable = false)
+    private int idZone;
+
+    @Basic
+    @Column(name = "name", nullable = false, length = 64)
+    private String name;
+
+    @Basic
+    @Column(name = "active", nullable = false)
+    private Boolean active;
+
+    public ZoneEntity() {
+    }
+
     public int getIdZone() {
         return idZone;
     }
@@ -20,8 +29,6 @@ public class ZoneEntity {
         this.idZone = idZone;
     }
 
-    @Basic
-    @Column(name = "name", nullable = false, length = 64)
     public String getName() {
         return name;
     }
@@ -30,13 +37,11 @@ public class ZoneEntity {
         this.name = name;
     }
 
-    @Basic
-    @Column(name = "active", nullable = false)
-    public byte getActive() {
+    public Boolean getActive() {
         return active;
     }
 
-    public void setActive(byte active) {
+    public void setActive(Boolean active) {
         this.active = active;
     }
 
@@ -46,12 +51,21 @@ public class ZoneEntity {
         if (o == null || getClass() != o.getClass()) return false;
         ZoneEntity that = (ZoneEntity) o;
         return idZone == that.idZone &&
-                active == that.active &&
-                Objects.equals(name, that.name);
+                Objects.equals(name, that.name) &&
+                Objects.equals(active, that.active);
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(idZone, name, active);
+    }
+
+    @Override
+    public String toString() {
+        return "ZoneEntity{" +
+                "idZone=" + idZone +
+                ", name='" + name + '\'' +
+                ", active=" + active +
+                '}';
     }
 }

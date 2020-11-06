@@ -11,7 +11,6 @@ date_format_lite varchar(32) NOT NULL,
 date_format_full varchar(32) NOT NULL,
 is_rtl boolean NOT NULL
 );
-
 INSERT INTO lang (id_lang, name, active, iso_code, language_code, locale, date_format_lite, date_format_full, is_rtl) VALUES
 (1, 'English (English)', true, 'en', 'en-us', 'en-US', 'm/d/Y', 'm/d/Y H:i:s', false),
 (2, 'Deutsch (German)', true, 'de', 'de-de', 'de-DE', 'd.m.Y', 'd.m.Y H:i:s', false),
@@ -27,6 +26,7 @@ ALTER TABLE lang ALTER COLUMN id_lang SET DEFAULT nextval('lang_id_lang_seq');
 ALTER SEQUENCE lang_id_lang_seq OWNED BY "lang"."id_lang";
 
 
+
 DROP TABLE IF EXISTS currency;
 CREATE TABLE IF NOT EXISTS currency (
 id_currency integer NOT NULL,
@@ -39,26 +39,22 @@ deleted boolean NOT NULL DEFAULT false,
 active boolean NOT NULL DEFAULT true,
 PRIMARY KEY (id_currency)
 ) ;
-
 INSERT INTO currency (id_currency, name, iso_code, numeric_iso_code, precision, conversion_rate, deleted, active) VALUES
 (1, 'Гривна', 'UAH', '980', 2, 1.000000, false, true),
 (2, 'Euro', 'EUR', '978', 2, 0.036120, false, true),
 (3, 'US Dollar', 'USD', '840', 2, 0.040227, false, true);
-
 CREATE SEQUENCE currency_id_currency_seq;
 ALTER TABLE currency ALTER COLUMN id_currency SET DEFAULT nextval('currency_id_currency_seq');
 ALTER SEQUENCE currency_id_currency_seq OWNED BY "currency"."id_currency";
-
 
 DROP TABLE IF EXISTS currency_lang;
 CREATE TABLE IF NOT EXISTS currency_lang (
 id_currency integer NOT NULL,
 id_lang integer NOT NULL,
-name varchar(255) NOT NULL,
-symbol varchar(255) NOT NULL,
+name varchar(64) NOT NULL,
+symbol varchar(64) NOT NULL,
 PRIMARY KEY (id_currency,id_lang)
 );
-
 INSERT INTO currency_lang (id_currency, id_lang, name, symbol) VALUES
 (1, 1, 'Hryvna', '₴'),
 (1, 2, 'Hryvna', '₴'),
@@ -81,6 +77,8 @@ INSERT INTO currency_lang (id_currency, id_lang, name, symbol) VALUES
 (3, 6, 'Доллар США', '$');
  */
 
+
+
 DROP TABLE IF EXISTS zone;
 CREATE TABLE IF NOT EXISTS zone (
 id_zone integer NOT NULL,
@@ -88,7 +86,6 @@ name varchar(64) NOT NULL,
 active boolean NOT NULL DEFAULT false,
 PRIMARY KEY (id_zone)
 );
-
 INSERT INTO zone (id_zone, name, active) VALUES
 (1, 'Europe', true),
 (2, 'North America', true),
@@ -98,10 +95,26 @@ INSERT INTO zone (id_zone, name, active) VALUES
 (6, 'South America', true),
 (7, 'Europe (non-EU)', true),
 (8, 'Central America/Antilla', true);
-
 CREATE SEQUENCE zone_id_zone_seq;
 ALTER TABLE zone ALTER COLUMN id_zone SET DEFAULT nextval('zone_id_zone_seq');
 ALTER SEQUENCE zone_id_zone_seq OWNED BY "zone"."id_zone";
+
+
+
+DROP TABLE IF EXISTS location;
+CREATE TABLE IF NOT EXISTS location (
+id_location bigint NOT NULL,
+latitude double precision NOT NULL,
+longitude double precision NOT NULL
+) ;
+INSERT INTO location (id_location, latitude, longitude) VALUES
+(1, 48.864716, 2.349014),
+(2, 55.751244, 37.618423),
+(3, 46.469391, 30.740883);
+CREATE SEQUENCE location_id_location_seq;
+ALTER TABLE location ALTER COLUMN id_location SET DEFAULT nextval('location_id_location_seq');
+ALTER SEQUENCE location_id_location_seq OWNED BY "location"."id_location";
+
 
 
 DROP TABLE IF EXISTS country;
@@ -123,7 +136,6 @@ CREATE TABLE IF NOT EXISTS country (
 KEY country_iso_code (iso_code),
 KEY country_ (id_zone)
  */
-
 INSERT INTO country (id_country, id_zone, id_currency, iso_code, call_prefix, active, contains_states, need_identification_number, need_zip_code, zip_code_format, display_tax_label) VALUES
 (1, 1, 0, 'DE', 49, false, false, false, true, 'NNNNN', true),
 (2, 1, 0, 'AT', 43, false, false, false, true, 'NNNN', true),
@@ -369,12 +381,9 @@ INSERT INTO country (id_country, id_zone, id_currency, iso_code, call_prefix, ac
 (242, 5, 0, 'PF', 689, false, false, false, true, '', true),
 (243, 5, 0, 'TF', 0, false, false, false, true, '', true),
 (244, 7, 0, 'AX', 0, false, false, false, true, 'NNNNN', true);
-
 CREATE SEQUENCE country_id_country_seq;
 ALTER TABLE country ALTER COLUMN id_zone SET DEFAULT nextval('country_id_country_seq');
 ALTER SEQUENCE country_id_country_seq OWNED BY "country"."id_country";
-
-
 
 DROP TABLE IF EXISTS country_lang;
 CREATE TABLE IF NOT EXISTS country_lang (
@@ -383,7 +392,6 @@ CREATE TABLE IF NOT EXISTS country_lang (
   name varchar(64) NOT NULL,
   PRIMARY KEY (id_country,id_lang)
 );
-
 INSERT INTO country_lang (id_country, id_lang, name) VALUES
 (1, 1, 'Germany'),
 (1, 2, 'Germany'),
@@ -1608,9 +1616,6 @@ INSERT INTO country_lang (id_country, id_lang, name) VALUES
 
 
 
-
-
-
 DROP TABLE IF EXISTS state;
 CREATE TABLE IF NOT EXISTS state (
   id_state integer NOT NULL,
@@ -1627,7 +1632,6 @@ CREATE TABLE IF NOT EXISTS state (
   KEY name (name),
   KEY id_zone (id_zone)
  */
-
 INSERT INTO state (id_state, id_country, id_zone, name, iso_code, tax_behavior, active) VALUES
 (1, 21, 2, 'AA', 'AA', 0, true),
 (2, 21, 2, 'AE', 'AE', 0, true),
@@ -1944,35 +1948,244 @@ INSERT INTO state (id_state, id_country, id_zone, name, iso_code, tax_behavior, 
 (313, 11, 3, 'Yamagata', '06', 0, true),
 (314, 11, 3, 'Yamaguchi', '35', 0, true),
 (315, 11, 3, 'Yamanashi', '19', 0, true);
-
 CREATE SEQUENCE state_id_state_seq;
 ALTER TABLE state ALTER COLUMN id_state SET DEFAULT nextval('state_id_state_seq');
 ALTER SEQUENCE state_id_state_seq OWNED BY "state"."id_state";
+
+DROP TABLE IF EXISTS state_lang;
+CREATE TABLE IF NOT EXISTS state_lang (
+id_state integer NOT NULL,
+id_lang integer NOT NULL,
+name varchar(64) NOT NULL,
+PRIMARY KEY (id_state,id_lang)
+);
+INSERT INTO state_lang (id_state, id_lang, name) VALUES
+(35, 1, 'New York'),
+(35, 2, 'New York'),
+(35, 3, 'New York'),
+(35, 4, 'New York'),
+(35, 5, 'New York');
+
+
+
+DROP TABLE IF EXISTS city;
+CREATE TABLE IF NOT EXISTS city (
+id_city integer NOT NULL,
+id_country integer NOT NULL,
+id_state integer,
+deleted boolean NOT NULL DEFAULT false,
+active boolean NOT NULL DEFAULT true,
+PRIMARY KEY (id_city)
+) ;
+INSERT INTO city (id_city, id_country, id_state, deleted, active) VALUES
+(1, 8, 0, false, true),
+(2, 177, 0, false, true),
+(3, 216, 0, false, true);
+CREATE SEQUENCE city_id_city_seq;
+ALTER TABLE city ALTER COLUMN id_city SET DEFAULT nextval('city_id_city_seq');
+ALTER SEQUENCE city_id_city_seq OWNED BY "city"."id_city";
+
+DROP TABLE IF EXISTS city_lang;
+CREATE TABLE IF NOT EXISTS city_lang (
+id_city integer NOT NULL,
+id_lang integer NOT NULL,
+name varchar(64) NOT NULL,
+symbol varchar(5) NOT NULL,
+PRIMARY KEY (id_city,id_lang)
+);
+INSERT INTO city_lang (id_city, id_lang, name, symbol) VALUES
+(1, 1, 'Paris', ''),
+(1, 2, 'Paris', ''),
+(1, 3, 'Paris', ''),
+(1, 4, 'Paris', ''),
+(1, 5, 'Paris', ''),
+(2, 1, 'Moscow', 'ms'),
+(2, 2, 'Moscow', 'ms'),
+(2, 3, 'Moscow', 'ms'),
+(2, 4, 'Moscow', 'ms'),
+(2, 5, 'Moscow', 'ms'),
+(3, 1, 'Odessa', 'od'),
+(3, 2, 'Odessa', 'od'),
+(3, 3, 'Odessa', 'od'),
+(3, 4, 'Odessa', 'od'),
+(3, 5, 'Odessa', 'od');
+
+
+
+DROP TABLE IF EXISTS microdistrict;
+CREATE TABLE IF NOT EXISTS microdistrict (
+id_microdistrict integer NOT NULL,
+id_city integer NOT NULL,
+deleted boolean NOT NULL DEFAULT false,
+active boolean NOT NULL DEFAULT true,
+PRIMARY KEY (id_microdistrict)
+) ;
+INSERT INTO microdistrict (id_microdistrict, id_city, deleted, active) VALUES
+(1, 3, false, true),
+(2, 3, false, true),
+(3, 3, false, true);
+CREATE SEQUENCE microdistrict_id_microdistrict_seq;
+ALTER TABLE microdistrict ALTER COLUMN id_microdistrict SET DEFAULT nextval('microdistrict_id_microdistrict_seq');
+ALTER SEQUENCE microdistrict_id_microdistrict_seq OWNED BY "microdistrict"."id_microdistrict";
+
+DROP TABLE IF EXISTS microdistrict_lang;
+CREATE TABLE IF NOT EXISTS microdistrict_lang (
+id_microdistrict integer NOT NULL,
+id_lang integer NOT NULL,
+name varchar(60) NOT NULL,
+PRIMARY KEY (id_microdistrict,id_lang)
+);
+INSERT INTO microdistrict_lang (id_microdistrict, id_lang, name) VALUES
+(1, 1, 'Seaside'),
+(1, 2, 'Seaside'),
+(1, 3, 'Приморский'),
+(1, 4, 'Seaside'),
+(1, 5, 'Seaside'),
+(2, 1, 'Moldavanka'),
+(2, 2, 'Moldavanka'),
+(2, 3, 'Молдаванка'),
+(2, 4, 'Moldavanka'),
+(2, 5, 'Moldavanka'),
+(3, 1, 'Peresyp'),
+(3, 2, 'Peresyp'),
+(3, 3, 'Пересыпь'),
+(3, 4, 'Peresyp'),
+(3, 5, 'Peresyp');
+
+
+
+DROP TABLE IF EXISTS street;
+CREATE TABLE IF NOT EXISTS street (
+id_street integer NOT NULL,
+id_city integer NOT NULL,
+id_microdistrict integer,
+deleted boolean NOT NULL DEFAULT false,
+active boolean NOT NULL DEFAULT true,
+PRIMARY KEY (id_street)
+) ;
+INSERT INTO street (id_street, id_city, id_microdistrict, deleted, active) VALUES
+(1, 3, 1, false, true),
+(2, 3, 1, false, true),
+(3, 3, 1, false, true);
+CREATE SEQUENCE street_id_street_seq;
+ALTER TABLE street ALTER COLUMN id_street SET DEFAULT nextval('street_id_street_seq');
+ALTER SEQUENCE street_id_street_seq OWNED BY "street"."id_street";
+
+DROP TABLE IF EXISTS street_lang;
+CREATE TABLE IF NOT EXISTS street_lang (
+id_street integer NOT NULL,
+id_lang integer NOT NULL,
+name varchar(64) NOT NULL,
+PRIMARY KEY (id_street,id_lang)
+);
+INSERT INTO street_lang (id_street, id_lang, name) VALUES
+(1, 1, 'Derybasovskaia'),
+(1, 2, 'Derybasovskaia'),
+(1, 3, 'Дерибасовская'),
+(1, 4, 'Derybasovskaia'),
+(1, 5, 'Derybasovskaia'),
+(2, 1, 'Nezhynskaia'),
+(2, 2, 'Nezhynskaia'),
+(2, 3, 'Нежинская'),
+(2, 4, 'Nezhynskaia'),
+(2, 5, 'Nezhynskaia'),
+(3, 1, 'Uspenskaia'),
+(3, 2, 'Uspenskaia'),
+(3, 3, 'Успенская'),
+(3, 4, 'Uspenskaia'),
+(3, 5, 'Uspenskaia');
 
 
 
 DROP TABLE IF EXISTS address;
 CREATE TABLE IF NOT EXISTS address (
 id_address integer NOT NULL,
-id_country integer NOT NULL,
-id_state integer DEFAULT NULL,
-address1 varchar(255) NOT NULL,
-address2 varchar(255) NOT NULL,
-postcode varchar(12) DEFAULT NULL,
-city varchar(64) NOT NULL,
-date_add timestamp NOT NULL,
-date_upd timestamp NOT NULL,
+id_city integer DEFAULT NULL,
+id_street integer NOT NULL,
+identifier varchar(64) NOT NULL,
+id_location bigint,
 active boolean NOT NULL DEFAULT true,
 deleted boolean NOT NULL DEFAULT false
 ) ;
-
-INSERT INTO address (id_address, id_country, id_state, address1, address2, postcode, city, date_add, date_upd, active, deleted) VALUES
-(1, 216, 0, 'Anonymous',       '',          '65000', 'Ukraine',  '2020-03-03 09:24:45', '2020-03-03 09:24:45', true, false),
-(2, 8, 0,   '16, Main street', '2nd floor', '75002', 'Paris ',   '2020-03-03 09:26:02', '2020-03-03 09:26:02', true, false),
-(3, 21, 35, '767 Fifth Ave.',  '',          '10153', 'New York', '2020-03-03 09:26:02', '2020-03-03 09:26:02', true, false),
-(4, 21, 35, '767 Fifth Ave.',  '',          '10154', 'New York', '2020-03-03 09:26:02', '2020-03-03 09:26:02', true, false),
-(5, 21, 12, '16, Main street', '2nd floor', '33133', 'Miami',    '2020-03-03 09:26:02', '2020-03-03 09:26:02', true, false);
-
+INSERT INTO address (id_address, id_city, id_street, identifier, id_location, active, deleted) VALUES
+(1, 3, 1, '1', 1,  true, false),
+(2, 3, 2, '2', 2,  true, false),
+(3, 3, 3, '3', 3,  true, false);
 CREATE SEQUENCE address_id_address_seq;
 ALTER TABLE address ALTER COLUMN id_address SET DEFAULT nextval('address_id_address_seq');
 ALTER SEQUENCE address_id_address_seq OWNED BY "address"."id_address";
+
+DROP TABLE IF EXISTS address_lang;
+CREATE TABLE IF NOT EXISTS address_lang (
+id_address integer NOT NULL,
+id_lang integer NOT NULL,
+name varchar(64) NOT NULL,
+PRIMARY KEY (id_address,id_lang)
+);
+INSERT INTO address_lang (id_address, id_lang, name) VALUES
+(1, 1, 'str. Derybasovskaia, 1'),
+(1, 2, 'str. Derybasovskaia, 1'),
+(1, 3, 'ул. Дерибасовская, дом 1'),
+(1, 4, 'str. Derybasovskaia, 1'),
+(1, 5, 'str. Derybasovskaia, 1'),
+(2, 1, 'str. Nezhynskaia, 2'),
+(2, 2, 'str. Nezhynskaia, 2'),
+(2, 3, 'ул. Нежинская, дом 2'),
+(2, 4, 'str. Nezhynskaia, 2'),
+(2, 5, 'str. Nezhynskaia, 2'),
+(3, 1, 'str. Uspenskaia, 3'),
+(3, 2, 'str. Uspenskaia, 3'),
+(3, 3, 'ул. Успенская, дом 3'),
+(3, 4, 'str. Uspenskaia, 3'),
+(3, 5, 'str. Uspenskaia, 3');
+
+
+DROP TABLE IF EXISTS reo;
+CREATE TABLE IF NOT EXISTS reo (
+id_reo integer NOT NULL,
+id_address integer DEFAULT NULL,
+id_type integer NOT NULL,
+active boolean NOT NULL DEFAULT true,
+deleted boolean NOT NULL DEFAULT false
+) ;
+INSERT INTO reo (id_reo, id_address, id_type, active, deleted) VALUES
+(1, 1, 1, true, false),
+(2, 2, 1, true, false),
+(3, 3, 1, true, false);
+CREATE SEQUENCE reo_id_reo_seq;
+ALTER TABLE reo ALTER COLUMN id_reo SET DEFAULT nextval('reo_id_reo_seq');
+ALTER SEQUENCE reo_id_reo_seq OWNED BY "reo"."id_reo";
+
+
+DROP TABLE IF EXISTS reo_type;
+CREATE TABLE IF NOT EXISTS reo_type (
+id_type integer NOT NULL,
+active boolean NOT NULL DEFAULT true,
+deleted boolean NOT NULL DEFAULT false
+) ;
+INSERT INTO reo_type (id_type, active, deleted) VALUES
+(1, true, false),
+(2, true, false),
+(3, true, false);
+CREATE SEQUENCE reo_type_id_type_seq;
+ALTER TABLE reo_type ALTER COLUMN id_type SET DEFAULT nextval('reo_type_id_type_seq');
+ALTER SEQUENCE reo_type_id_type_seq OWNED BY "reo_type"."id_type";
+
+DROP TABLE IF EXISTS reo_type_lang;
+CREATE TABLE IF NOT EXISTS reo_type_lang (
+id_type integer NOT NULL,
+id_lang integer NOT NULL,
+name varchar(64) NOT NULL,
+PRIMARY KEY (id_type,id_lang)
+);
+INSERT INTO reo_type_lang (id_type, id_lang, name) VALUES
+(1, 1, 'house'),
+(1, 2, 'house'),
+(1, 3, 'дом'),
+(1, 4, 'house'),
+(1, 5, 'house'),
+(2, 1, 'apartment'),
+(2, 2, 'apartment'),
+(2, 3, 'квартира'),
+(2, 4, 'apartment'),
+(2, 5, 'apartment');
